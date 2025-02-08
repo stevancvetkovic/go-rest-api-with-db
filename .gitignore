@@ -1,2 +1,3 @@
 *.lock
 .devbox
+.DS_Store

@@ -64,7 +64,9 @@ func TestAddPerson(t *testing.T) {
 	}
 
 	var response map[string]interface{}
-	json.Unmarshal(w.Body.Bytes(), &response)
+	if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+		t.Fatalf("Failed to unmarshal response: %v", err)
+	}
 	if response["status"] != "person added" {
 		t.Fatalf("Expected status 'person added', but got %s", response["status"])
 	}
@@ -93,7 +95,9 @@ func TestGetPersons(t *testing.T) {
 	}
 
 	var response map[string]interface{}
-	json.Unmarshal(w.Body.Bytes(), &response)
+	if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+		t.Fatalf("Failed to unmarshal response: %v", err)
+	}
 	persons := response["persons"].([]interface{})
 	if len(persons) != 1 {
 		t.Fatalf("Expected 1 person, but got %d", len(persons))
@@ -131,7 +135,9 @@ func TestDeletePerson(t *testing.T) {
 	}
 
 	var response map[string]interface{}
-	json.Unmarshal(w.Body.Bytes(), &response)
+	if err := json.Unmarshal(w.Body.Bytes(), &response); err != nil {
+		t.Fatalf("Failed to unmarshal response: %v", err)
+	}
 	if response["status"] != "person deleted" {
 		t.Fatalf("Expected status 'person deleted', but got %s", response["status"])
 	}

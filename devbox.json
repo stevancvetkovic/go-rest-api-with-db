@@ -1,14 +1,16 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.7/.schema/devbox.schema.json",
   "packages": {
-    "go":     "1.23.3",
     "git":    "2.47.0",
     "sqlite": "3.46.1",
     "darwin.apple_sdk.frameworks.Security": {
       "platforms": ["x86_64-darwin", "aarch64-darwin"]
     },
-    "gosec":   "2.21.4",
-    "gocyclo": "0.6.0"
+    "gosec":         "2.21.4",
+    "gocyclo":       "0.6.0",
+    "golangci-lint": "1.63.4",
+    "gopls":         "0.17.1",
+    "go":            "1.23.5"
   },
   "shell": {
     "init_hook": [

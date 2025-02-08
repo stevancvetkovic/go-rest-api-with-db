@@ -80,6 +80,7 @@ func setupRouter(db *gorm.DB) *gin.Engine {
 	r.POST("/person", handleAddPerson(db))
 	r.GET("/person", handleGetPersons(db))
 	r.DELETE("/person", handleDeletePerson(db))
+	r.PUT("/person", handleUpdatePerson(db))
 
 	return r
 }
@@ -144,6 +145,29 @@ func handleDeletePerson(db *gorm.DB) gin.HandlerFunc {
 		}
 
 		c.JSON(http.StatusOK, gin.H{"status": "person deleted"})
+	}
+}
+
+func handleUpdatePerson(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var person Person
+		if err := c.ShouldBindJSON(&person); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		_, err := getPerson(db, &person)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		if err := updatePerson(db, &person); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"status": "person updated"})
 	}
 }
 
